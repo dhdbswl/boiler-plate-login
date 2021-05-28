@@ -10,7 +10,7 @@ const userSchema = mongoose.Schema({
     },
     email: {
         type: String,
-        trim: true,
+        trim: true, // 스페이스 없애주는 기능
         unique: 1
     },
     password: {
@@ -21,14 +21,17 @@ const userSchema = mongoose.Schema({
         type: String,
         maxlenght: 50
     },
+    // 관리자 or 일반 유저 구분
     role: {
         type: Number,
         default: 0
     },
     image: String,
+    // 유효성 관리를 위함
     token: {
         type: String
     },
+    // 토큰 사용 기간
     tokenExp: {
         type: Number
     }

@@ -26,7 +26,9 @@ mongoose.connect(config.mongoURI, {
 }).then(() => console.log('MongoDB connected...'))
   .catch(err => console.log(err))
 
-app.get('/', (req, res) => res.send('Hello World! 새해 복 많이 받으세요'))
+app.get('/', (req, res) => res.send('Hello World! 새해 복 많이 받으세요'));
+
+app.get('/api/hello', (req, res) => res.send('Hello World~'));
 
 //레지스터 라우터
 app.post('/api/users/register', (req, res) => {
@@ -58,7 +60,7 @@ app.post('/api/users/login', (req, res) => {
     user.comparePassword(req.body.password, (err, isMatch) => {
       if(!isMatch) {
         return res.json({
-          oginSuccess: false,
+          loginSuccess: false,
           message: "비밀번호가 일치하지 않습니다."
         });
       }
@@ -68,7 +70,8 @@ app.post('/api/users/login', (req, res) => {
         if(err) return res.status(400).send(err);
         //토큰을 저장한다. 어디에? ex)쿠키, 세션, 로컬스토리지 등...
         //예제로 쿠키에 저장 (cookie-parser 라이브러리 설치)
-        res.cookie("x_auth", user.token)
+        res
+        .cookie("x_auth", user.token)
         .status(200)
         .json({
           loginSuccess: true,
@@ -99,12 +102,14 @@ app.get('/api/users/auth', auth, (req, res) => {
 
 // 로그아웃 라우터
 app.get('/api/users/logout', auth, (req, res) => {
-  User.findOneAndUpdate({_id:req.user._id}, {token: ""}, (err, user) => {
-    if(err) return res.json({success: false, err});
-    return res.status(200).send({
-      success: true
-    });
-  });
+  User.findOneAndUpdate({ _id: req.user._id },
+      { token: "" }
+      , (err, user) => {
+          if (err) return res.json({ success: false, err });
+          return res.status(200).send({
+              success: true
+          })
+      })
 })
 
 

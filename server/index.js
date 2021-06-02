@@ -91,7 +91,7 @@ app.get('/api/users/auth', auth, (req, res) => {
     //유저가 관리자인지 확인
     //role === 0 : 일반 유저, 0이 아니면 관리자
     isAdmin: req.user.role === 0 ? false : true,
-    isAuth: true,
+    isAuth: true, // 로그인 된 유저인지
     email: req.user.email,
     name: req.user.name,
     lastname: req.user.lastname,

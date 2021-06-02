@@ -1,7 +1,8 @@
 import axios from 'axios';
 import {
     LOGIN_USER,
-    REGISTER_USER
+    REGISTER_USER,
+    AUTH_USER
 } from './types';
 
 // login action
@@ -32,3 +33,16 @@ export function registerUser(dataToSubmit) {
     };
 }
 
+// hoc/auth action
+export function auth() {
+    const request = axios.get('/api/users/auth')
+        .then(response => response.data);
+
+    // component에서 받은 데이터를 reducer에 전달
+    // /_reducers/user_reducer.js에 전달
+    // type, response를 전달
+    return {
+        type: AUTH_USER,
+        payload: request
+    };
+}

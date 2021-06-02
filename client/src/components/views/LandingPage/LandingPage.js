@@ -9,13 +9,14 @@ function LandingPage(props) {
         .then(response => {console.log(response)});
     }, []);
 
+    // LogOut
     const onLogOutHandler = () => {
         axios.get(`/api/users/logout`)
         .then(response => {
             if(response.data.success){
                 props.history.push("/login")
             } else{
-                alert('Faild to logout')
+                alert('Faild to LogOut...')
             }
         })
     }
